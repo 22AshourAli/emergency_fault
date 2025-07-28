@@ -1,0 +1,264 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+    />
+
+    <title>EnergyCo - Emergency Fault Report</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+      :root {
+        --primary: #3f7bbf;
+        --primary-hover: #3268a8;
+        --danger: #dc2626;
+        --danger-hover: #b91c1c;
+        --text-primary: #121416;
+        --text-secondary: #6a7581;
+        --border: #dde0e3;
+        --background: #f8fafc;
+      }
+      
+      body {
+        font-family: 'Space Grotesk', 'Noto Sans', sans-serif;
+        background-color: var(--background);
+      }
+      
+      .form-input {
+        transition: all 0.2s ease;
+      }
+      
+      .form-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(63, 123, 191, 0.1);
+      }
+      
+      .btn-primary {
+        transition: all 0.2s ease;
+      }
+      
+      .btn-primary:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-1px);
+      }
+      
+      .btn-danger {
+        transition: all 0.2s ease;
+      }
+      
+      .btn-danger:hover {
+        background-color: var(--danger-hover);
+        transform: translateY(-1px);
+      }
+      
+      .file-upload {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .file-upload-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+      
+      .alert-banner {
+        animation: slideDown 0.5s ease-out;
+      }
+      
+      @keyframes slideDown {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="text-primary">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                <path
+                  d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <h1 class="text-xl font-bold text-gray-900">EnergyCo</h1>
+          </div>
+          
+          <nav class="hidden md:flex items-center space-x-8">
+            <a href="#" class="text-sm font-medium text-gray-700 hover:text-primary">Dashboard</a>
+            <a href="#" class="text-sm font-medium text-gray-700 hover:text-primary">Operations</a>
+            <a href="#" class="text-sm font-medium text-gray-700 hover:text-primary">Maintenance</a>
+            <a href="#" class="text-sm font-medium text-gray-700 hover:text-primary">Safety</a>
+            <a href="#" class="text-sm font-medium text-gray-700 hover:text-primary">Training</a>
+          </nav>
+          
+          <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+              <img 
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo0S_NwYCStOmTxcgrxCpe0XKImtjjJE2THr-XtbR1SOS2iG1qFzAIv8dOevIUNFr2ZpnYY5gh4KtuJfNKlIfMjg3gQHUzqrEQi9tqsNZJ-zNhSlNxFbQbaal-okBepKAn82JJmXhjS-zOZc3tD-NtxVrFSMK7Pupo9JIsQHsAubIdHIo8Yjraaq9koxvmv6L9JrTpztn5yYT7GwCxnrj6au3V6Cj6ZT7gnF1mTx5LU9Nufpz0BzxV417wuPJUzReQ-F1ivzJ-v7ig" 
+                alt="User profile"
+                class="w-full h-full object-cover"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Emergency Alert Banner -->
+    <div class="alert-banner bg-red-600 text-white">
+      <div class="container mx-auto px-6 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+            <span class="font-medium">EMERGENCY FAULT REPORTING</span>
+          </div>
+          <button class="text-white hover:text-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-8">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto">
+          <!-- Page Header -->
+          <div class="mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Report New Emergency Fault</h2>
+            <p class="text-gray-600">Use this form to immediately report critical faults in the power grid. All emergency reports are prioritized.</p>
+          </div>
+          
+          <!-- Form Container -->
+          <div class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+            <form class="space-y-6">
+              <!-- Fault Details -->
+              <div>
+                <label for="faultDetails" class="block text-sm font-medium text-gray-700 mb-2">Fault Details *</label>
+                <textarea
+                  id="faultDetails"
+                  rows="4"
+                  placeholder="Describe the fault in detail. Include any immediate safety concerns or potential impacts on operations. Example: 'Transformer malfunction at Substation Alpha, causing power outage in Sector 3. Audible buzzing and smoke observed. Potential risk of fire.'"
+                  class="form-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-1 focus:ring-primary"
+                  required
+                ></textarea>
+                <p class="mt-2 text-sm text-gray-500">Be as specific as possible about the nature and severity of the fault.</p>
+              </div>
+              
+              <!-- Location -->
+              <div>
+                <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
+                <input
+                  type="text"
+                  id="location"
+                  placeholder="Enter the location of the fault. Use the map below to pinpoint the exact coordinates."
+                  class="form-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-1 focus:ring-primary"
+                  required
+                />
+              </div>
+              
+              <!-- Map -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Location Map</label>
+                <div class="w-full h-64 rounded-lg overflow-hidden bg-gray-100 border border-gray-300">
+                  <img 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGNcoRtee0DQRFivpkGI07pKM4N0Qmz9GOPpTV4iUVn9ZuhqJ0PvCzcYgjfZsb17VrR-VeAXGj2XGDQdX7MtJtzUqGZ3riYJ8qh-kO9ZoXi_D3TNvgW_X51l-I0CGFXgbbEzBZhOJjlIii-AunaRPsmxyT44Shbi-Z-rooCvsVfkocV_rvs27X6WnUUpwzn8T-bXdFogrxhCEKsPMIMyDeTnG5iQRSjo2mnxpXrttqRXUNctDX5JS1QnNRegU3xau59SLnl9yYBd48" 
+                    alt="Location map"
+                    class="w-full h-full object-cover"
+                  >
+                </div>
+                <p class="mt-2 text-sm text-gray-500">Click on the map to mark the exact location of the fault.</p>
+              </div>
+              
+              <!-- Reporting Department -->
+              <div>
+                <label for="department" class="block text-sm font-medium text-gray-700 mb-2">Reporting Department *</label>
+                <select
+                  id="department"
+                  class="form-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-1 focus:ring-primary bg-white"
+                  required
+                >
+                  <option value="">Select your department</option>
+                  <option value="operations">Operations</option>
+                  <option value="maintenance">Maintenance</option>
+                  <option value="safety">Safety</option>
+                  <option value="field_team">Field Team</option>
+                  <option value="control_room">Control Room</option>
+                </select>
+              </div>
+              
+              <!-- Initial Observations -->
+              <div>
+                <label for="observations" class="block text-sm font-medium text-gray-700 mb-2">Initial Observations</label>
+                <textarea
+                  id="observations"
+                  rows="4"
+                  placeholder="Record any initial observations or actions taken. Example: 'Power supply to Sector 3 isolated. Fire department notified. Waiting for maintenance team.'"
+                  class="form-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-1 focus:ring-primary"
+                ></textarea>
+              </div>
+              
+              <!-- Attachments -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Attachments</label>
+                <div class="file-upload flex items-center justify-center w-full">
+                  <label for="file" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                      <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                      </svg>
+                      <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                      <p class="text-xs text-gray-500">Photos, videos, or documents (MAX. 10MB each)</p>
+                    </div>
+                    <input id="file" type="file" class="file-upload-input" multiple />
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Form Actions -->
+              <div class="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  class="btn-danger inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-danger hover:bg-danger-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger"
+                >
+                  Emergency Stop
+                </button>
+                <button
+                  type="submit"
+                  class="btn-primary inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                >
+                  Submit Emergency Report
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
